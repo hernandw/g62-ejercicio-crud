@@ -30,7 +30,37 @@ const create = async ( name, description, price, stock ) => {
   };
 
 
+  const editProduct = async (name, description, price, stock, id) => {
+    try {
+      const query = "UPDATE products SET name = $1, description = $2, price = $3, stock = $4 WHERE id = $5 RETURNING *";
+      const values = [name, description, price, stock, id];
+      const response = await pool.query(query, values);
+      if(response.rowCount > 0) {
+        return response.rows
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const query = "DELETE FROM products WHERE id = $1 RETURNING *";
+      const values = [id];
+      const response = await pool.query(query, values);
+      if(response.rowCount > 0) {
+        return response.rows
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
+
   export const models = {
     create,
-    getProducts
+    getProducts,
+    editProduct,
+    deleteProduct
   }
