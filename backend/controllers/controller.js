@@ -13,7 +13,7 @@ const create = async (req, res) => {
   try {
     const { name, description, price, stock } = req.body;
     const response = await models.create(name, description, price, stock);
-    res.status(200).send("Product created");
+    res.status(200).send(response);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -49,6 +49,16 @@ const deleteProduct = async (req, res) => {
     }
   };
 
+  const getProductsLimit = async(req, res) => {
+    try {
+      const {limits, order_by, page } = req.query
+      const response = await models.getProductsLimit({limits, order_by, page})
+      res.status(200).send(response)
+    } catch (error) {
+      res.status(500).send(error.message)
+    }
+  }
+
 
 export const controllers = {
   create,
@@ -56,5 +66,6 @@ export const controllers = {
   notFound,
   home,
   editProduct,
-  deleteProduct
+  deleteProduct,
+  getProductsLimit
 }

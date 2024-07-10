@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const urlApi = "http://localhost:3000/products";
+const urlApi = "http://localhost:3009/products/limit/?limits=10";
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
@@ -19,7 +19,7 @@ const ListProducts = () => {
   return <div>
     <h2>Listado de Productos</h2>
 
-    <div className="d-flex gap-3">
+    <div className="container d-flex flex-wrap gap-3">
     {products && products.length === 0 ? <p>Loading...</p> :
          products.map((item) => (
           <div key={item.id} className="card" style={{ width: "18rem" }}>
